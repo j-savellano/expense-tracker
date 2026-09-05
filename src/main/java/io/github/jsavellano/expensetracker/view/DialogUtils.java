@@ -1,7 +1,7 @@
 package io.github.jsavellano.expensetracker.view;
 
 import io.github.jsavellano.expensetracker.model.Expense;
-import io.github.jsavellano.expensetracker.repository.DatabaseManager;
+import io.github.jsavellano.expensetracker.service.ExpenseService;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -84,21 +84,13 @@ public class DialogUtils {
                 }
 
                 try {
-                    double newAmt = Double.parseDouble(amtStr);
-                    if (newAmt <= 0) {
-                        showAlert("Amount must be greater than zero.");
-                        return;
-                    }
-
-                    String oldDesc = expense.getDescription();
-                    LocalDate oldDate = expense.getDate();
-
-                    expense.setDescription(newDesc);
-                    expense.setCategory(newCat);
-                    expense.setDate(newDate);
-                    expense.setAmount(newAmt);
-
-                    DatabaseManager.updateExpense(expense, oldDesc, oldDate);
+                    ExpenseService.getInstance().updateExpense(
+                            expense,
+                            newDesc,
+                            newCat,
+                            newDate,
+                            amtStr
+                    );
 
                     onUpdate.run();
                 } catch (NumberFormatException ex) {
