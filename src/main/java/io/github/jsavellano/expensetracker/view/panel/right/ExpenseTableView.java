@@ -1,11 +1,9 @@
 package io.github.jsavellano.expensetracker.view.panel.right;
 
 import io.github.jsavellano.expensetracker.model.Expense;
-import io.github.jsavellano.expensetracker.repository.DatabaseManager;
+import io.github.jsavellano.expensetracker.service.ExpenseService;
 import io.github.jsavellano.expensetracker.view.DialogUtils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,18 +15,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class ExpenseTableView extends TableView<Expense> {
-
-    private final ObservableList<Expense> masterData;
     private final Runnable onDataChanged;
 
-    public ExpenseTableView(ObservableList<Expense> masterData, FilteredList<Expense> filteredData, Runnable onDataChanged) {
-        this.masterData = masterData;
+    public ExpenseTableView(Runnable onDataChanged) {
         this.onDataChanged = onDataChanged;
 
         setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         buildColumns();
 
-        SortedList<Expense> sorted = new SortedList<>(filteredData);
+        SortedList<Expense> sorted = new SortedList<>(ExpenseService.getInstance().getFilteredData());
         sorted.comparatorProperty().bind(comparatorProperty());
         setItems(sorted);
     }
@@ -136,8 +131,7 @@ public class ExpenseTableView extends TableView<Expense> {
 
                         confirm.showAndWait().ifPresent(response -> {
                             if (response == ButtonType.YES) {
-                                DatabaseManager.deleteExpense(expense);
-                                masterData.remove(expense);
+                                ExpenseService.getInstance().deleteExpense(expense);
                                 onDataChanged.run();
                             }
                         });

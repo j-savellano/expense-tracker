@@ -1,7 +1,7 @@
 package io.github.jsavellano.expensetracker.view.panel.right;
 
-import io.github.jsavellano.expensetracker.model.Expense;
-import javafx.collections.transformation.FilteredList;
+import io.github.jsavellano.expensetracker.service.ExpenseService;
+import io.github.jsavellano.expensetracker.service.FilterService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,8 +12,6 @@ import javafx.scene.layout.HBox;
 import java.time.LocalDate;
 
 public class FilterToolbar extends HBox {
-
-    private final FilteredList<Expense> filteredData;
     private final Runnable onFilterApplied;
 
     private final TextField searchField = new TextField();
@@ -21,9 +19,8 @@ public class FilterToolbar extends HBox {
     private final ComboBox<String> filterMonthCombo = new ComboBox<>();
     private final ComboBox<String> filterYearCombo = new ComboBox<>();
 
-    public FilterToolbar(FilteredList<Expense> filteredData, Runnable onFilterApplied) {
+    public FilterToolbar(Runnable onFilterApplied) {
         super(10);
-        this.filteredData = filteredData;
         this.onFilterApplied = onFilterApplied;
 
         setAlignment(Pos.CENTER_LEFT);
@@ -81,27 +78,8 @@ public class FilterToolbar extends HBox {
         String selMonth = filterMonthCombo.getValue();
         String selYear = filterYearCombo.getValue();
 
-        filteredData.setPredicate(exp -> {
-            boolean matchQ = q.isEmpty()
-                    || exp.getDescription().toLowerCase().contains(q)
-                    || exp.getCategory().toLowerCase().contains(q);
-
-            boolean matchCat = selCat == null
-                    || "All Categories".equals(selCat)
-                    || exp.getCategory().equalsIgnoreCase(selCat);
-
-            boolean matchMonth = selMonth == null || "All Months".equals(selMonth);
-            if (!matchMonth && exp.getDate() != null) {
-                matchMonth = exp.getDate().getMonth().name().equalsIgnoreCase(selMonth);
-            }
-
-            boolean matchYear = selYear == null || "All Years".equals(selYear);
-            if (!matchYear && exp.getDate() != null) {
-                matchYear = String.valueOf(exp.getDate().getYear()).equals(selYear);
-            }
-
-            return matchQ && matchCat && matchMonth && matchYear;
-        });
+        var predicate = FilterService.createFilterPredicate(q, selCat, selMonth, selYear);
+        ExpenseService.getInstance().getFilteredData().setPredicate(predicate);
 
         onFilterApplied.run();
     }

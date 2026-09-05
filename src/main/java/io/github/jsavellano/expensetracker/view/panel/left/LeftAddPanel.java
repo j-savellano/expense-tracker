@@ -1,27 +1,24 @@
 package io.github.jsavellano.expensetracker.view.panel.left;
 
-import io.github.jsavellano.expensetracker.model.Expense;
-import io.github.jsavellano.expensetracker.repository.DatabaseManager;
+import io.github.jsavellano.expensetracker.service.ExpenseService;
 import io.github.jsavellano.expensetracker.view.DialogUtils;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
 public class LeftAddPanel extends VBox {
-
-    private final ObservableList<Expense> masterData;
     private final Runnable onAddCallback;
 
     private final Label sideTotalLabel = new Label("$0.00");
     private final Label sideCountLabel = new Label("0 entries");
     private final Label sideTopCatLabel = new Label("None");
 
-    public LeftAddPanel(ObservableList<Expense> masterData, Runnable onAddCallback) {
+    public LeftAddPanel(Runnable onAddCallback) {
         super(14);
-        this.masterData = masterData;
         this.onAddCallback = onAddCallback;
 
         setPadding(new Insets(18, 16, 18, 16));
@@ -75,28 +72,20 @@ public class LeftAddPanel extends VBox {
             LocalDate dt = datePicker.getValue();
             String amtStr = amtField.getText().trim();
 
-            if (desc.isEmpty() || dt == null || amtStr.isEmpty()) {
-                DialogUtils.showAlert("Please fill in description, date, and amount.");
-                return;
-            }
-
             try {
-                double amt = Double.parseDouble(amtStr);
-                if (amt <= 0) {
-                    DialogUtils.showAlert("Amount must be greater than zero.");
-                    return;
-                }
-
-                Expense expense = new Expense(desc, cat, dt, amt);
-                DatabaseManager.insertExpense(expense);
-                masterData.addFirst(expense);
+                ExpenseService.getInstance().addExpense(
+                        desc,
+                        cat,
+                        dt,
+                        amtStr
+                );
                 onAddCallback.run();
 
                 descField.clear();
                 amtField.clear();
                 descField.requestFocus();
-            } catch (NumberFormatException ex) {
-                DialogUtils.showAlert("Please enter a valid numeric amount.");
+            } catch (Exception ex) {
+                DialogUtils.showAlert(ex.getMessage());
             }
         });
 
