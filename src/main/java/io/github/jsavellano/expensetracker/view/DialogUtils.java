@@ -1,6 +1,7 @@
 package io.github.jsavellano.expensetracker.view;
 
 import io.github.jsavellano.expensetracker.model.Expense;
+import io.github.jsavellano.expensetracker.repository.DatabaseManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -89,10 +90,15 @@ public class DialogUtils {
                         return;
                     }
 
+                    String oldDesc = expense.getDescription();
+                    LocalDate oldDate = expense.getDate();
+
                     expense.setDescription(newDesc);
                     expense.setCategory(newCat);
                     expense.setDate(newDate);
                     expense.setAmount(newAmt);
+
+                    DatabaseManager.updateExpense(expense, oldDesc, oldDate);
 
                     onUpdate.run();
                 } catch (NumberFormatException ex) {

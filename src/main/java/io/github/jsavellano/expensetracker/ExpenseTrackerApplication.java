@@ -1,6 +1,7 @@
 package io.github.jsavellano.expensetracker;
 
 import io.github.jsavellano.expensetracker.model.Expense;
+import io.github.jsavellano.expensetracker.repository.DatabaseManager;
 import io.github.jsavellano.expensetracker.view.panel.left.LeftAddPanel;
 import io.github.jsavellano.expensetracker.view.panel.right.RightTablePanel;
 import javafx.application.Application;
@@ -30,15 +31,10 @@ public class ExpenseTrackerApplication extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Personal Expense Tracker");
 
+        DatabaseManager.initializeDatabase();
+
         // Initial Sample Data
-        masterData.addAll(
-                new Expense("Groceries & organic produce", "Groceries", LocalDate.now(), 68.45),
-                new Expense("Espresso & pastry with colleague", "Food & Dining", LocalDate.now().minusDays(1), 11.50),
-                new Expense("Monthly transit pass reload", "Transportation", LocalDate.now().minusDays(2), 85.00),
-                new Expense("Gigabit fiber internet bill", "Housing & Bills", LocalDate.now().minusDays(4), 70.00),
-                new Expense("Wireless desk keyboard", "Shopping", LocalDate.now().minusDays(6), 99.00),
-                new Expense("Cinema tickets & snacks", "Entertainment", LocalDate.now().minusDays(9), 36.50)
-        );
+        masterData.addAll(DatabaseManager.loadAllExpenses());
 
         filteredData = new FilteredList<>(masterData, p -> true);
 

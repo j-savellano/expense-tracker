@@ -1,6 +1,7 @@
 package io.github.jsavellano.expensetracker.view.panel.right;
 
 import io.github.jsavellano.expensetracker.model.Expense;
+import io.github.jsavellano.expensetracker.repository.DatabaseManager;
 import io.github.jsavellano.expensetracker.view.DialogUtils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
@@ -135,6 +136,7 @@ public class ExpenseTableView extends TableView<Expense> {
 
                         confirm.showAndWait().ifPresent(response -> {
                             if (response == ButtonType.YES) {
+                                DatabaseManager.deleteExpense(expense);
                                 masterData.remove(expense);
                                 onDataChanged.run();
                             }
