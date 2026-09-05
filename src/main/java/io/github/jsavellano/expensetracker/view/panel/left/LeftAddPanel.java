@@ -1,6 +1,7 @@
 package io.github.jsavellano.expensetracker.view.panel.left;
 
 import io.github.jsavellano.expensetracker.model.Expense;
+import io.github.jsavellano.expensetracker.repository.DatabaseManager;
 import io.github.jsavellano.expensetracker.view.DialogUtils;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -86,7 +87,9 @@ public class LeftAddPanel extends VBox {
                     return;
                 }
 
-                masterData.add(0, new Expense(desc, cat, dt, amt));
+                Expense expense = new Expense(desc, cat, dt, amt);
+                DatabaseManager.insertExpense(expense);
+                masterData.addFirst(expense);
                 onAddCallback.run();
 
                 descField.clear();
