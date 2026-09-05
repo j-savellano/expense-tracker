@@ -1,0 +1,157 @@
+/* macOS Aqua Two-Pane Layout Theme */
+.root-pane {
+    -fx-background-color: #F5F5F7;
+    -fx-font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+/* Left Vertical Add Expense Panel */
+.side-panel {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: transparent #E2E8F0 transparent transparent;
+    -fx-border-width: 1px;
+}
+
+.side-header-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0F172A;
+}
+
+.side-header-sub {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748B;
+}
+
+.field-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #334155;
+}
+
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 5px 8px;
+    -fx-font-size: 12px;
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-color: #0071E3;
+    -fx-border-width: 1.5px;
+}
+
+.primary-add-button {
+    -fx-background-color: #0071E3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 14px;
+    -fx-cursor: hand;
+}
+
+.primary-add-button:hover {
+    -fx-background-color: #0077ED;
+}
+
+.snapshot-box {
+    -fx-background-color: white;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.snapshot-title {
+    -fx-font-size: 10px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #94A3B8;
+}
+
+.snapshot-total {
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0F172A;
+}
+
+.snapshot-sub {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748B;
+}
+
+/* Right Table Panel */
+.kpi-bar {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
+    -fx-border-width: 1px;
+}
+
+.kpi-card {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.toolbar-box {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
+    -fx-border-width: 1px;
+}
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
+    -fx-border-width: 1px;
+    -fx-font-weight: 700;
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748B;
+    -fx-padding: 6px 10px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FCFCFD;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #E8F0FE;
+}
+
+/* Actions Column Buttons */
+.table-edit-btn {
+    -fx-background-color: #EFF6FF;
+    -fx-text-fill: #1D4ED8;
+    -fx-border-color: #BFDBFE;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-cursor: hand;
+}
+
+.table-edit-btn:hover {
+    -fx-background-color: #DBEAFE;
+}
+
+.table-delete-btn {
+    -fx-background-color: #FEF2F2;
+    -fx-text-fill: #DC2626;
+    -fx-border-color: #FECACA;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-cursor: hand;
+}
+
+.table-delete-btn:hover {
+    -fx-background-color: #FEE2E2;
+}

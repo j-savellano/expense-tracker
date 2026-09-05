@@ -1,0 +1,10 @@
+module io.github.jsavellano.expensetracker {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires javafx.graphics;
+    requires javafx.base;
+
+    // Grant JavaFX reflection access to your packages (Fixes IllegalAccessException)
+    opens io.github.jsavellano.expensetracker to javafx.graphics, javafx.fxml, javafx.base;
+    exports io.github.jsavellano.expensetracker;
+}
