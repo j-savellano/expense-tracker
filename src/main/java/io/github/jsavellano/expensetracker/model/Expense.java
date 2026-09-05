@@ -1,4 +1,4 @@
-package io.github.jsavellano.expensetracker;
+package io.github.jsavellano.expensetracker.model;
 
 import javafx.beans.property.*;
 import java.time.LocalDate;
